@@ -1,0 +1,115 @@
+-- CREATE TABLE Customer (
+--     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+--     nama VARCHAR(255) NOT NULL,
+--     telp VARCHAR(255) NOT NULL,
+--     alamat VARCHAR(255) NOT NULL,
+--     createAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+--     updateAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+-- );
+
+-- CREATE TABLE Staff (
+--     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+--     nama VARCHAR(255) NOT NULL,
+--     telp VARCHAR(255) NOT NULL,
+--     alamat VARCHAR(255) NOT NULL,
+--     createAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+--     updateAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+-- );
+
+-- CREATE TABLE Transaksi (
+--     nota CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+--     tanggal_masuk DATETIME DEFAULT CURRENT_TIMESTAMP,
+--     tanggal_keluar DATETIME,
+--     id_customer CHAR(36) NOT NULL,
+--     id_staff CHAR(36) NOT NULL,
+--     createAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+--     updateAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+--     FOREIGN KEY (id_customer) REFERENCES Customer(id),
+--     FOREIGN KEY (id_staff) REFERENCES Staff(id)
+-- );
+
+-- CREATE TABLE Layanan (
+--     id_layanan CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+--     layanan VARCHAR(255) NOT NULL
+-- );
+
+-- CREATE TABLE Layanan_Detail (
+--     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+--     id_layanan CHAR(36) NOT NULL,
+--     layanan_detail VARCHAR(255) NOT NULL,
+--     harga INT NOT NULL,
+--     createAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+--     updateAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+--     FOREIGN KEY (id_layanan) REFERENCES Layanan(id_layanan)
+-- );
+
+-- CREATE TABLE Transaksi_Detail (
+--     id CHAR(36) PRIMARY KEY DEFAULT (UUID()),
+--     nota CHAR(36) NOT NULL,
+--     total_harga FLOAT NOT NULL,
+--     id_layanan CHAR(36) NOT NULL,
+--     berat FLOAT,
+--     jumlah_barang INT,
+--     createAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+--     updateAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+--     FOREIGN KEY (nota) REFERENCES Transaksi(nota),
+--     FOREIGN KEY (id_layanan) REFERENCES Layanan_Detail(id)
+-- );
+
+CREATE TABLE Customer (
+  id CHAR(36) PRIMARY KEY,
+  nama VARCHAR(255) NOT NULL,
+  telp VARCHAR(255) NOT NULL,
+  alamat TEXT NOT NULL,
+  createAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updateAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Staff (
+  id CHAR(36) PRIMARY KEY,
+  nama VARCHAR(255) NOT NULL,
+  telp VARCHAR(255) NOT NULL,
+  alamat TEXT NOT NULL,
+  createAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updateAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Transaksi (
+  nota CHAR(36) PRIMARY KEY,
+  tanggal_masuk DATETIME DEFAULT CURRENT_TIMESTAMP,
+  tanggal_keluar DATETIME,
+  id_customer CHAR(36) NOT NULL,
+  id_staff CHAR(36) NOT NULL,
+  CONSTRAINT FK_Customer FOREIGN KEY (id_customer) REFERENCES Customer(id),
+  CONSTRAINT FK_Staff FOREIGN KEY (id_staff) REFERENCES Staff(id)
+);
+
+CREATE TABLE Layanan (
+  id_layanan CHAR(36) PRIMARY KEY,
+  layanan VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Layanan_Detail (
+  id CHAR(36) PRIMARY KEY,
+  id_layanan CHAR(36) NOT NULL,
+  layanan_detail VARCHAR(255) NOT NULL,
+  harga INT NOT NULL,
+  createAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updateAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT FK_Layanan FOREIGN KEY (id_layanan) REFERENCES Layanan(id_layanan)
+);
+
+CREATE TABLE Transaksi_Detail (
+  id CHAR(36) PRIMARY KEY,
+  nota CHAR(36) NOT NULL,
+  total_harga FLOAT NOT NULL,
+  id_layanan CHAR(36) NOT NULL,
+  berat FLOAT,
+  jumlah_barang INT,
+  createAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+  updateAt DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  CONSTRAINT FK_Transaksi FOREIGN KEY (nota) REFERENCES Transaksi(nota),
+  CONSTRAINT FK_Layanan_Detail FOREIGN KEY (id_layanan) REFERENCES Layanan_Detail(id)
+);
+
+

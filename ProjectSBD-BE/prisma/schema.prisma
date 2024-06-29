@@ -1,0 +1,102 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id       String   @id @default(uuid())
+  username String   @unique
+  email    String?  @unique
+  password String
+  createAt DateTime @default(now())
+  updateAt DateTime @default(now())
+}
+
+model Customer {
+  id        String      @id @default(uuid())
+  nama      String
+  telp      String
+  alamat    String
+  createAt  DateTime    @default(now())
+  updateAt  DateTime    @default(now())
+  Transaksi Transaksi[]
+}
+
+model Staff {
+  id        String      @id @default(uuid())
+  nama      String
+  telp      String
+  alamat    String
+  createAt  DateTime    @default(now())
+  updateAt  DateTime    @default(now())
+  Transaksi Transaksi[]
+}
+
+model Transaksi {
+  nota             String             @id @default(uuid())
+  tanggal_masuk    DateTime           @default(now())
+  tanggal_keluar   DateTime?
+  id_customer      String
+  customer         Customer           @relation(fields: [id_customer], references: [id], onDelete: Cascade)
+  id_staff         String
+  staff            Staff              @relation(fields: [id_staff], references: [id], onDelete: Cascade)
+  transaksi_detail Transaksi_Detail[]
+}
+
+model Transaksi_Detail {
+  id            String         @id @default(uuid())
+  nota          String
+  total_harga   Float
+  id_layanan    String
+  layanan       Layanan_Detail @relation(fields: [id_layanan], references: [id], onDelete: Cascade)
+  berat         Float?
+  jumlah_barang Int?
+  createAt      DateTime       @default(now())
+  updateAt      DateTime       @default(now())
+  transaksi     Transaksi      @relation(fields: [nota], references: [nota], onDelete: Cascade)
+}
+
+// model List_Pembelian {
+//   nota             String             @id
+//   itemId           String
+//   layanan_detail   Layanan_Detail     @relation(fields: [itemId], references: [id])
+//   Transaksi_Detail Transaksi_Detail[]
+// }
+
+model Layanan {
+  id_layanan     String           @id @default(uuid())
+  layanan        String
+  Layanan_Detail Layanan_Detail[]
+}
+
+model Layanan_Detail {
+  id               String             @id @default(uuid())
+  id_layanan       String
+  layanan          Layanan            @relation(fields: [id_layanan], references: [id_layanan], onDelete: Cascade)
+  layanan_detail   String
+  harga            Int
+  createAt         DateTime           @default(now())
+  updateAt         DateTime           @default(now())
+  Transaksi_Detail Transaksi_Detail[]
+}
+
+// enum Layanan {
+//   KILOAN
+//   HELAIAN
+// }
+
+// enum MemberTypeInterface {
+//   NORMAL
+//   LANGGANAN
+//   VIP
+// }
