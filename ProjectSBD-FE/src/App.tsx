@@ -22,6 +22,7 @@ import { LogOut, getError, getUserData, token } from './Utils'
 import Cookies from "js-cookie"
 import axios from 'axios'
 import { Api_Url } from './env'
+import PageNotFound from './Pages/PageNotFound'
 
 function App() {
   const { pathname } = useLocation()
@@ -58,20 +59,22 @@ function App() {
       checkToken()
     }
   }, [])
+  console.log(userData)
 
   return (
     <div className="">
-      {loggedIn ?
+      {loggedIn && userData && userData.role === "Staff" ?
         <Layout>
           <Routes>
+            <Route path='*' element={<PageNotFound />} />
             <Route path='/' element={<Dashboard />} />
             <Route path='/Login' element={<Auth />} />
             <Route path='/Settings' element={<Dashboard />} />
             <Route path='/Transactions' element={<Transactions />} />
             <Route path='/Transactions/Detail/:nota' element={<DetailTransactions />} />
             <Route path='/Transactions/Add' element={<AddTransactions />} />
-            <Route path='/Staff' element={<Staff />} />
-            <Route path='/Staff/Add' element={<AddStaff />} />
+            {/* <Route path='/Staff' element={<Staff />} />
+            <Route path='/Staff/Add' element={<AddStaff />} /> */}
             <Route path='/Customer' element={<Customer />} />
             <Route path='/Customer/Add' element={<AddCustomer />} />
             <Route path='/Detail-Layanan' element={<LayananDetail />} />
@@ -80,10 +83,29 @@ function App() {
             <Route path='/Layanan/Add' element={<AddLayanan />} />
           </Routes>
         </Layout>
-        :
-        <Routes>
-          <Route path='/Login' element={<Auth />} />
-        </Routes>
+        : loggedIn && userData && userData.role === "Admin" ?
+          <Layout>
+            <Routes>
+              <Route path='/' element={<Dashboard />} />
+              <Route path='/Login' element={<Auth />} />
+              <Route path='/Settings' element={<Dashboard />} />
+              <Route path='/Transactions' element={<Transactions />} />
+              <Route path='/Transactions/Detail/:nota' element={<DetailTransactions />} />
+              <Route path='/Transactions/Add' element={<AddTransactions />} />
+              <Route path='/Staff' element={<Staff />} />
+              <Route path='/Staff/Add' element={<AddStaff />} />
+              <Route path='/Customer' element={<Customer />} />
+              <Route path='/Customer/Add' element={<AddCustomer />} />
+              <Route path='/Detail-Layanan' element={<LayananDetail />} />
+              <Route path='/Detail-Layanan/Add' element={<AddLayananDetail />} />
+              <Route path='/Layanan' element={<Layanan />} />
+              <Route path='/Layanan/Add' element={<AddLayanan />} />
+            </Routes>
+          </Layout>
+          :
+          <Routes>
+            <Route path='/Login' element={<Auth />} />
+          </Routes>
       }
     </div>
   )

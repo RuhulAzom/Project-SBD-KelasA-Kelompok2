@@ -126,9 +126,9 @@ export default function Layanan() {
                                 </td>
                                 <td className={`text-center ${i === (data.length - 1) && "rounded-br-[.8rem]"} bg-white p-[1rem] text-[.9rem] font-[400] text-main-gray-text`}>
                                     <div className="flex gap-2 w-full justify-center">
-                                        <button className="bg-main-yellow text-main-orange py-[.8rem] px-[1rem] font-[600] rounded-[1rem] hover:bg-main-yellow-hover active:bg-main-yellow">
+                                        {/* <button className="bg-main-yellow text-main-orange py-[.8rem] px-[1rem] font-[600] rounded-[1rem] hover:bg-main-yellow-hover active:bg-main-yellow">
                                             Detail
-                                        </button>
+                                        </button> */}
                                         <button className="bg-main-pink text-main-red py-[.8rem] px-[1rem] font-[600] rounded-[1rem] hover:bg-main-pink-hover active:bg-main-pink"
                                             onClick={() => { setModalDelete((prev: any) => ({ ...prev, title: item.name, show: true, id: item.id_layanan })) }}
                                         >

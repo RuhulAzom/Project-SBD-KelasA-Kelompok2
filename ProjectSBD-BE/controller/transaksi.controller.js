@@ -723,18 +723,10 @@ exports.DeleteTransaksi = async (req, res) => {
                 nota: req.query.nota
             }
         })
-        const deleteTransaksiDetail = await prisma.transaksi_Detail.deleteMany({
-            where: {
-                nota: req.query.nota
-            }
-        })
         return res.status(200).json({
             status: 200,
             message: "Succesfully Delete Transaksi",
-            data: {
-                transaksi: deleteTransaksi,
-                transaksi_Detail: deleteTransaksiDetail
-            }
+            data: deleteTransaksi
         })
     } catch (error) {
         console.log("Error in Delete Transaksi Detail:", error)

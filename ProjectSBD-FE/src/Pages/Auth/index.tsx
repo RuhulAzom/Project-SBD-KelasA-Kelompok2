@@ -55,7 +55,7 @@ export default function Auth() {
                             OKE LAUNDRY
                         </h1>
                         <p className="text-green-600">
-                            Buat Akunmu
+                            Masuk Dengan Akunmu
                         </p>
                     </div>
                     <form onSubmit={(e) => {

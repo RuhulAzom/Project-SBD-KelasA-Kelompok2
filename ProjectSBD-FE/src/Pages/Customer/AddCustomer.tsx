@@ -52,7 +52,7 @@ export default function AddCustomer() {
                     <div className="flex">
                         <div className="pr-4">
                             <h3 className="font-medium text-black dark:text-white">
-                                Insert List Pricing
+                                Insert Customer
                             </h3>
                         </div>
                     </div>

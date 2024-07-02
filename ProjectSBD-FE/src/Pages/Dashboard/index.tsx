@@ -69,7 +69,7 @@ export default function Dashboard() {
                         <CardLayanan
                             key={i}
                             index={i}
-                            heading={`${item.layanan} - ${item.layanan_detail}`}
+                            heading={`${item.layanan_detail} - ${item.layanan}`}
                             transaction={item.transaksi}
                             totalSale={item.total_pendapatan}
                             waiting={item.proses}
