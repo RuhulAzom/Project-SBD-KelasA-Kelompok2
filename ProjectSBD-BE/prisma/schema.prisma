@@ -72,13 +72,6 @@ model Transaksi_Detail {
   transaksi     Transaksi      @relation(fields: [nota], references: [nota], onDelete: Cascade)
 }
 
-// model List_Pembelian {
-//   nota             String             @id
-//   itemId           String
-//   layanan_detail   Layanan_Detail     @relation(fields: [itemId], references: [id])
-//   Transaksi_Detail Transaksi_Detail[]
-// }
-
 model Layanan {
   id_layanan     String           @id @default(uuid())
   layanan        String
@@ -95,14 +88,3 @@ model Layanan_Detail {
   updateAt         DateTime           @default(now())
   Transaksi_Detail Transaksi_Detail[]
 }
-
-// enum Layanan {
-//   KILOAN
-//   HELAIAN
-// }
-
-// enum MemberTypeInterface {
-//   NORMAL
-//   LANGGANAN
-//   VIP
-// }
