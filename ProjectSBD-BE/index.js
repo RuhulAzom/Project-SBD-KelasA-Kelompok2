@@ -114,7 +114,7 @@ app.post("/login", async (req, res) => {
         }
         const checkPassword = bcrypt.compareSync(password, data.password)
         if (checkPassword) {
-            const token = jwt.sign({ ...data, password: "-" }, 'shhhhh', { expiresIn: "10m" });
+            const token = jwt.sign({ ...data, password: "-" }, 'shhhhh', { expiresIn: "24h" });
             return res.status(200).json({
                 status: 200,
                 data,

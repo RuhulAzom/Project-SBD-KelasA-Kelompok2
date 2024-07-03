@@ -59,7 +59,10 @@ exports.GetCustomer = async (req, res) => {
         if (page) {
             const data = await prisma.customer.findMany({
                 take: limit,
-                skip
+                skip,
+                orderBy: {
+                    createAt: "desc"
+                }
             })
             const totalItems = await prisma.customer.count()
             const totalPages = Math.ceil(totalItems / limit)
@@ -79,7 +82,11 @@ exports.GetCustomer = async (req, res) => {
             })
         }
 
-        const data = await prisma.customer.findMany()
+        const data = await prisma.customer.findMany({
+            orderBy: {
+                createAt: "desc"
+            }
+        })
         if (data.length === 0) {
             return res.status(404).json({
                 status: 404,

@@ -11,6 +11,9 @@ exports.GetLayananDetail = async (req, res) => {
             const data = await prisma.layanan_Detail.findMany({
                 take: limit,
                 skip,
+                orderBy: {
+                    createAt: "desc"
+                },
                 include: {
                     layanan: {
                         select: {

@@ -58,7 +58,10 @@ exports.GetStaff = async (req, res) => {
         if (page) {
             const data = await prisma.staff.findMany({
                 take: limit,
-                skip
+                skip,
+                orderBy: {
+                    createAt: "desc"
+                }
             })
             const totalItems = await prisma.staff.count()
             const totalPages = Math.ceil(totalItems / limit)
@@ -78,7 +81,11 @@ exports.GetStaff = async (req, res) => {
             })
         }
 
-        const data = await prisma.staff.findMany()
+        const data = await prisma.staff.findMany({
+            orderBy: {
+                createAt: "desc"
+            }
+        })
         if (data.length === 0) {
             return res.status(404).json({
                 status: 404,
