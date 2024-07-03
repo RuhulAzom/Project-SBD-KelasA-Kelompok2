@@ -1,0 +1,69 @@
+CREATE DATABASE project_sbd_test;
+
+USE project_sbd_test;
+
+CREATE TABLE Account (
+    id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    username VARCHAR(255) UNIQUE NOT NULL,
+    email VARCHAR(255) UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role ENUM('Admin', 'Staff') DEFAULT 'Staff',
+    createAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updateAt DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Customer (
+    id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    nama VARCHAR(255) NOT NULL,
+    telp VARCHAR(20) NOT NULL,
+    alamat TEXT NOT NULL,
+    createAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updateAt DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Staff (
+    id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    nama VARCHAR(255) NOT NULL,
+    telp VARCHAR(20) NOT NULL,
+    alamat TEXT NOT NULL,
+    createAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updateAt DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Transaksi (
+    nota VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    tanggal_masuk DATETIME DEFAULT CURRENT_TIMESTAMP,
+    tanggal_keluar DATETIME,
+    id_customer VARCHAR(36) NOT NULL,
+    id_staff VARCHAR(36) NOT NULL,
+    CONSTRAINT fk_customer FOREIGN KEY (id_customer) REFERENCES Customer(id) ON DELETE CASCADE,
+    CONSTRAINT fk_staff FOREIGN KEY (id_staff) REFERENCES Staff(id) ON DELETE CASCADE
+);
+
+CREATE TABLE Transaksi_Detail (
+    id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    nota VARCHAR(36) NOT NULL,
+    total_harga FLOAT NOT NULL,
+    id_layanan VARCHAR(36) NOT NULL,
+    berat FLOAT,
+    jumlah_barang INT,
+    createAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updateAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_transaksi FOREIGN KEY (nota) REFERENCES Transaksi(nota) ON DELETE CASCADE,
+    CONSTRAINT fk_layanan_detail FOREIGN KEY (id_layanan) REFERENCES Layanan_Detail(id) ON DELETE CASCADE
+);
+
+CREATE TABLE Layanan (
+    id_layanan VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    layanan VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Layanan_Detail (
+    id VARCHAR(36) PRIMARY KEY DEFAULT (UUID()),
+    id_layanan VARCHAR(36) NOT NULL,
+    layanan_detail VARCHAR(255) NOT NULL,
+    harga INT NOT NULL,
+    createAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updateAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT fk_layanan FOREIGN KEY (id_layanan) REFERENCES Layanan(id_layanan) ON DELETE CASCADE
+);
