@@ -1,13 +1,22 @@
-import { userData } from "../App"
-import contoh from "../_Assets/me4.jpg"
 
-export default function Header() {
+import { useContext } from "react"
+import contoh from "../_Assets/me4.jpg"
+import { AppContexs } from "../App"
+import { Menu } from 'lucide-react';
+
+export default function Header({ setShowSidebar }: { setShowSidebar: React.Dispatch<React.SetStateAction<boolean>> }) {
+
+    const { userData } = useContext(AppContexs)
+
     return (
-        <div className="flex items-center h-full px-[1rem] justify-between">
-            <p className="font-[500] text-main-heading-text text-[1.5rem] sansita tracking-wide">
+        <div className="flex items-center h-full px-[1.5rem] md:px-[1rem] justify-between">
+            <p className="hidden md:block font-[500] text-main-heading-text text-[1.5rem] sansita tracking-wide">
                 Oke Laundry
             </p>
-            <div className="flex gap-[1rem] pr-[3rem] items-center">
+            <div onClick={() => { setShowSidebar((prev) => !prev) }}>
+                <Menu />
+            </div>
+            <div className="flex gap-[1rem] md:pr-[3rem] items-center">
                 <div className="text-end">
                     <p className="text-[.9rem]">
                         {userData?.username}

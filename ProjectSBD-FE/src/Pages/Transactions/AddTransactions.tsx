@@ -1,18 +1,13 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { Api_Url } from "../../env"
-import { Link, useNavigate } from "react-router-dom"
-import InputText from "../../_Component/Input/InputText"
+import { Link } from "react-router-dom"
 import LoadingPageWithText from "../../_Component/Loading/LoadingPageText"
-import InputNumber from "../../_Component/Input/InputNumber"
-import InputSelect from "../../_Component/Input/InputSelect"
 import toast from "react-hot-toast"
 import { getError } from "../../Utils"
 
 
 export default function AddTransactions() {
-
-    const navigate = useNavigate()
 
     const [customer, setCustomer] = useState<any>({})
     const [name, setName] = useState<string>("")
@@ -81,7 +76,7 @@ export default function AddTransactions() {
 
     console.log(staff, customer)
 
-    const SearchCustomer = async (nama: String) => {
+    const SearchCustomer = async (nama: string) => {
         try {
             const res = await fetch(`${Api_Url}/customer/search?nama=${nama}`)
             const data = await res.json()
@@ -103,7 +98,7 @@ export default function AddTransactions() {
             return error;
         }
     }
-    const SearchStaff = async (nama: String) => {
+    const SearchStaff = async (nama: string) => {
         try {
             const res = await fetch(`${Api_Url}/staff/search?nama=${nama}`)
             const data = await res.json()
@@ -173,7 +168,7 @@ export default function AddTransactions() {
     console.log("listBuy", listBuy)
 
     return (
-        <div className="px-[4rem] py-[2rem]">
+        <div className="px-[1rem] md:px-[4rem] py-[2rem]">
             <LoadingPageWithText heading="Adding Transactions...." loading={loading} />
             <Link to={"/Transactions"} className="flex gap-[1rem] justify-start items-center mb-[2rem] hover:bg-main-gray-border cursor-pointer select-none w-fit px-[.8rem] rounded-[1rem] duration-300">
                 <i className='bx bx-arrow-back text-[1.5rem]' />
@@ -227,7 +222,7 @@ export default function AddTransactions() {
                             {OnSearch &&
                                 <div className="bg-white border border-main-gray-border w-full absolute top-[calc(100%)] left-0 rounded-[.5rem]">
                                     {SearchData?.map((item: any, i: number) => (
-                                        <div className="hover:bg-main-purple px-[1rem] py-[.5rem] text-main-gray-text"
+                                        <div key={i} className="hover:bg-main-purple px-[1rem] py-[.5rem] text-main-gray-text"
                                             onClick={() => { setCustomer({ ...item }); setOnSearch(false); setName("") }}
                                         >
                                             <p>{item.nama} / {item.telp} / {item.alamat}</p>
@@ -288,7 +283,7 @@ export default function AddTransactions() {
                             {OnSearchStaff &&
                                 <div className="bg-white border border-main-gray-border w-full absolute top-[calc(100%)] left-0 rounded-[.5rem]">
                                     {SearchDataStaff?.map((item: any, i: number) => (
-                                        <div className="hover:bg-main-purple px-[1rem] py-[.5rem] text-main-gray-text"
+                                        <div key={i} className="hover:bg-main-purple px-[1rem] py-[.5rem] text-main-gray-text"
                                             onClick={() => { setStaff({ ...item }); setOnSearchStaff(false); setNameStaff("") }}
                                         >
                                             <p>{item.nama} / {item.telp} / {item.alamat}</p>
@@ -327,7 +322,7 @@ export default function AddTransactions() {
                                     Pilih Layanan
                                 </option>
                                 {optionLayananDetail?.map((item: any, i: number) => (
-                                    <option value={item.id} className="text-black">
+                                    <option key={i} value={item.id} className="text-black">
                                         {item.layanan_detail}
                                     </option>
                                 ))}
@@ -340,7 +335,7 @@ export default function AddTransactions() {
                                         {item.layanan_detail} ({item.layanan})
                                     </p>
                                     <input type="number" placeholder={item.layanan === "HELAIAN" ? "Jumlah barang...." : "Berat..."} className="px-[1rem] py-[.7rem] rounded-[.5rem] outline-none border border-main-gray-border w-full" onChange={(e) => {
-                                        let data = listBuy;
+                                        const data = listBuy;
                                         data.forEach((item: any, index: number) => {
                                             if (index === i && item.layanan === "HELAIAN") {
                                                 item.jumlah_barang = parseFloat(e.target.value)

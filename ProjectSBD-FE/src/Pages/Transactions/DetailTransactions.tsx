@@ -1,19 +1,14 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { Api_Url } from "../../env"
-import { Link, useNavigate, useParams } from "react-router-dom"
-import InputText from "../../_Component/Input/InputText"
+import { Link, useParams } from "react-router-dom"
 import LoadingPageWithText from "../../_Component/Loading/LoadingPageText"
-import InputNumber from "../../_Component/Input/InputNumber"
-import InputSelect from "../../_Component/Input/InputSelect"
-import { getDate, getDateString, getError, getHours } from "../../Utils"
+import { getDateString, getHours } from "../../Utils"
 import logo from "../../_Assets/logoo.png"
 import toast from "react-hot-toast"
 
 
 export default function DetailTransactions() {
-
-    const navigate = useNavigate()
     const { nota } = useParams()
     console.log(nota)
 
@@ -33,6 +28,7 @@ export default function DetailTransactions() {
     }
     const handleTransactionEditStatus = async () => {
         try {
+            setLoading(true)
             const res = await axios.put(`${Api_Url}/transaksi`, {
                 nota
             })
@@ -40,8 +36,10 @@ export default function DetailTransactions() {
             if (res.status === 200) {
                 getDetailTransaction()
             }
+            setLoading(false)
             return;
         } catch (error) {
+            setLoading(false)
             console.log("Failed edit Transactions:", error)
             throw error
         }
@@ -69,8 +67,8 @@ export default function DetailTransactions() {
     };
 
     return (
-        <div className="px-[4rem] py-[2rem] flex flex-col items-center">
-            <LoadingPageWithText heading="Adding Transactions...." loading={loading} />
+        <div className="px-[1rem] md:px-[4rem] py-[2rem] flex flex-col items-center">
+            <LoadingPageWithText heading="Change Transactions Status...." loading={loading} />
             <div className="w-full flex mb-[1rem] justify-between">
                 <Link to={"/Transactions"} className="flex gap-[1rem] justify-start items-center hover:bg-main-gray-border cursor-pointer select-none w-fit px-[.8rem] rounded-[1rem] duration-300">
                     <i className='bx bx-arrow-back text-[1.5rem]' />
@@ -80,7 +78,7 @@ export default function DetailTransactions() {
                 </Link>
                 <div className="flex items-center gap-[1rem]">
                     {!data?.tanggal_keluar &&
-                        <button className="flex items-center gap-[.5rem] bg-main-hover px-[1.5rem] py-[.8rem] rounded-[2rem] font-[500] text-white duration-300 hover:bg-[#5d5fef9d]" onClick={() => {
+                        <button className="hidden md:flex items-center gap-[.5rem] bg-main-hover px-[1.5rem] py-[.8rem] rounded-[2rem] font-[500] text-white duration-300 hover:bg-[#5d5fef9d]" onClick={() => {
                             toast.promise(
                                 handleTransactionEditStatus(),
                                 {
@@ -101,6 +99,25 @@ export default function DetailTransactions() {
                         Print
                     </button>
                 </div>
+            </div>
+            <div className="w-full md:hidden flex justify-end mb-[1rem]">
+                {!data?.tanggal_keluar &&
+                    <button className="flex items-center gap-[.5rem] bg-main-hover px-[1.5rem] py-[.8rem] rounded-[2rem] font-[500] text-white duration-300 hover:bg-[#5d5fef9d]" onClick={() => {
+                        toast.promise(
+                            handleTransactionEditStatus(),
+                            {
+                                loading: 'Changing Transaction Status...',
+                                success: <b>Transaction {nota} is Done!</b>,
+                                error: <b>Could not change transaction status.</b>,
+                            },
+                            {
+                                duration: 5000
+                            }
+                        );
+                    }}>
+                        Ubah Status Pesananan Selesai
+                    </button>
+                }
             </div>
             <div id="printDiv" className="w-full max-w-[800px]">
                 <div id="content" className="rounded-sm bg-white shadow-xl w-full">

@@ -40,7 +40,7 @@ export default function EditCustomer({ data, setEdit, refresh }: any) {
 
     return (
         <div className="fixed top-0 left-0 z-[100] w-full h-full bg-[#ffffff01] backdrop-blur-[8px] flex justify-center items-center">
-            <div className="bg-white p-[3rem] shadow-default-black rounded-[1rem] flex flex-col gap-[2rem] relative w-[400px]">
+            <div className="bg-white p-[3rem] shadow-default-black rounded-[1rem] flex flex-col gap-[2rem] relative w-[90%] md:w-full max-w-[400px]">
                 <i className="bx bx-x absolute top-4 right-4 text-[1.5rem] hover:bg-main-gray-border rounded-[50%] duration-300" onClick={() => { setEdit({ value: false, data: {} }) }} />
                 <h1 className="text-[1.1rem] font-[600] text-main-gray-text text-center">
                     Edit Customer

@@ -4,7 +4,6 @@ import { useState } from "react"
 import { getError } from "../../Utils"
 import toast from "react-hot-toast"
 import Cookies from "js-cookie"
-import { userData } from "../../App"
 import LoginFrame from "../../_Assets/Login.png"
 import Loading from "../../_Component/Loading/Loading"
 

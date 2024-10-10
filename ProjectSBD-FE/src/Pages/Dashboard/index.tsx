@@ -1,15 +1,16 @@
-import { useEffect, useState } from "react";
-import { userData } from "../../App";
+import { useContext, useEffect, useState } from "react";
 import CardLayanan from "../../_Component/CardLayanan";
 import HeadingInfoSales from "../../_Component/HeadingInfoSales";
 import axios from "axios";
 import { Api_Url } from "../../env";
 import { utils, writeFile } from "xlsx";
 import { getDateString } from "../../Utils";
+import { AppContexs } from "../../App";
 
 
 export default function Dashboard() {
 
+    const { userData } = useContext(AppContexs)
     const [dataLayanan, setDataLayanan] = useState<any>([])
 
     const getInfoLayanan = async () => {
@@ -39,14 +40,14 @@ export default function Dashboard() {
             }
         })
 
-        let wb = utils.book_new(),
+        const wb = utils.book_new(),
             ws = utils.json_to_sheet(download);
         utils.book_append_sheet(wb, ws, "items");
         writeFile(wb, fileName);
     };
 
     return (
-        <div className="px-[4rem] py-[2rem] flex flex-col gap-[1rem]">
+        <div className="px-[1rem] md:px-[4rem] py-[2rem] flex flex-col gap-[1rem]">
             <h1 className="text-[2rem] font-[500] text-main-gray-text">
                 Welcome Back, {userData.username}
             </h1>
@@ -61,7 +62,7 @@ export default function Dashboard() {
                         className="bg-[#9a9cfd] hover:bg-[#9a9cfdc5] duration-300 px-[1rem] py-[.5rem] font-[500] text-white flex justify-center items-center rounded-[1.5rem]"
                         onClick={() => exportData(`Data Transaksi Layanan_${getDateString(new Date())}.xlsx`)}
                     >
-                        Export All Data Transaksi Layanan
+                        Export All Data
                     </button>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">

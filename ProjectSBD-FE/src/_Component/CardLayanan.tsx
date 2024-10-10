@@ -1,7 +1,3 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import { Api_Url } from "../env";
-// import { API_URL } from "../env";
 import { utils, writeFile } from "xlsx";
 import { getDateString } from "../Utils";
 
@@ -9,44 +5,44 @@ const CardLayanan = ({ heading, transaction, totalSale, waiting, data, index }: 
     const formatRupiah = (amount: any) => {
         return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(amount);
     };
-    const handleMonth = (month: any) => {
-        switch (month) {
-            case 1:
-                return "January";
-            case 2:
-                return "February";
-            case 3:
-                return "March";
-            case 4:
-                return "April";
-            case 5:
-                return "May";
-            case 6:
-                return "June";
-            case 7:
-                return "July";
-            case 8:
-                return "August";
-            case 9:
-                return "September";
-            case 10:
-                return "October";
-            case 11:
-                return "November";
-            case 12:
-                return "December";
-            default:
-                return "Invalid month";
-        }
-    }
-    const handleDate = (dates: any) => {
-        const Dates = new Date(dates);
-        const day = Dates.getDate();
-        const month = Dates.getMonth() + 1;
-        const year = Dates.getFullYear()
-        const newDate = `${day} ${handleMonth(month)} ${year}`
-        return newDate
-    }
+    // const handleMonth = (month: any) => {
+    //     switch (month) {
+    //         case 1:
+    //             return "January";
+    //         case 2:
+    //             return "February";
+    //         case 3:
+    //             return "March";
+    //         case 4:
+    //             return "April";
+    //         case 5:
+    //             return "May";
+    //         case 6:
+    //             return "June";
+    //         case 7:
+    //             return "July";
+    //         case 8:
+    //             return "August";
+    //         case 9:
+    //             return "September";
+    //         case 10:
+    //             return "October";
+    //         case 11:
+    //             return "November";
+    //         case 12:
+    //             return "December";
+    //         default:
+    //             return "Invalid month";
+    //     }
+    // }
+    // const handleDate = (dates: any) => {
+    //     const Dates = new Date(dates);
+    //     const day = Dates.getDate();
+    //     const month = Dates.getMonth() + 1;
+    //     const year = Dates.getFullYear()
+    //     const newDate = `${day} ${handleMonth(month)} ${year}`
+    //     return newDate
+    // }
 
     // console.log(data)
     const exportData = async (fileName: string) => {
@@ -61,7 +57,7 @@ const CardLayanan = ({ heading, transaction, totalSale, waiting, data, index }: 
             }
         })
 
-        let wb = utils.book_new(),
+        const wb = utils.book_new(),
             ws = utils.json_to_sheet(download);
         utils.book_append_sheet(wb, ws, "items");
         writeFile(wb, fileName);

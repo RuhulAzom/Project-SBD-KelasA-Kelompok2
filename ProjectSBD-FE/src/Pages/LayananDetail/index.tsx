@@ -27,7 +27,6 @@ export default function LayananDetail() {
 
 
     const [searchValue, setSearchValue] = useState<string>("")
-    const [typeSearch, setTypeSearch] = useState<string>("nama")
     const [page, setPage] = useState<number>(1)
     const [totalPages, setTotalPages] = useState<number>(1)
 
@@ -101,7 +100,7 @@ export default function LayananDetail() {
     }
 
     return (
-        <div className="py-[2rem] px-[4rem] flex flex-col gap-[2rem]">
+        <div className="py-[2rem] px-[1rem] md:px-[4rem] flex flex-col gap-[2rem]">
 
             <ModalDelete data={modalDelete} setDelete={setModalDelete} />
             <LoadingPageWithText heading={`Deleting "${modalDelete.title}"`} loading={loading} />
@@ -112,10 +111,13 @@ export default function LayananDetail() {
 
             <HeadingInfoSales />
 
-            <div className="">
+            <div className="flex items-center justify-between w-full">
                 <p className="text-[1.5rem] font-[500] text-main-heading-text">
                     Detail Layanan
                 </p>
+                <Link to={"/Detail-Layanan/Add"} className="md:block shrink-0 bg-main-purple text-main font-[500] px-[1.5rem] py-[.8rem] rounded-[1rem] hover:bg-main-purple-hover active:bg-main-purple duration-200 shadow-table-black">
+                    Add Items
+                </Link>
             </div>
 
             <div className="flex w-full items-center justify-between gap-[1rem]">
@@ -146,32 +148,32 @@ export default function LayananDetail() {
                     </button>
                 </div>
 
-                <Link to={"/Detail-Layanan/Add"} className="shrink-0 bg-main-purple text-main font-[500] px-[1.5rem] py-[.8rem] rounded-[1rem] hover:bg-main-purple-hover active:bg-main-purple duration-200 shadow-table-black">
+                <Link to={"/Detail-Layanan/Add"} className="hidden md:block shrink-0 bg-main-purple text-main font-[500] px-[1.5rem] py-[.8rem] rounded-[1rem] hover:bg-main-purple-hover active:bg-main-purple duration-200 shadow-table-black">
                     Add Items
                 </Link>
             </div>
 
 
-            <div className="bg-body w-full select-none">
+            <div className="bg-body w-full select-none overflow-x-auto text-[75%] md:text-[unset] rounded-[.8rem] overflow-hidden md:rounded-none md:overflow-auto">
                 <table className="w-full shadow-table-black rounded-[.8rem]">
                     <thead>
                         <tr className="border-b border-main-gray-border">
-                            <th className={`select-text text-center rounded-tl-[.8rem] bg-white p-[1rem] font-[500] text-[1rem]`}>
+                            <th className={`select-text text-center rounded-tl-[.8rem] bg-white p-[1rem] font-[500] md:text-[1rem]`}>
                                 No
                             </th>
-                            <th className={`select-text text-center bg-white p-[1rem] font-[500] text-[1rem]`}>
+                            {/* <th className={`select-text text-center bg-white p-[1rem] font-[500] md:text-[1rem]`}>
                                 ID
-                            </th>
-                            <th className={`select-text text-center bg-white p-[1rem] font-[500] text-[1rem]`}>
+                            </th> */}
+                            <th className={`select-text text-center bg-white p-[1rem] font-[500] md:text-[1rem]`}>
                                 Nama Layanan
                             </th>
-                            <th className={`select-text text-center bg-white p-[1rem] font-[500] text-[1rem]`}>
+                            <th className={`select-text text-center bg-white p-[1rem] font-[500] md:text-[1rem]`}>
                                 Harga
                             </th>
-                            <th className={`select-text text-center bg-white p-[1rem] font-[500] text-[1rem]`}>
+                            <th className={`select-text text-center bg-white p-[1rem] font-[500] md:text-[1rem]`}>
                                 Layanan
                             </th>
-                            <th className={`select-text text-center rounded-tr-[.8rem] bg-white p-[1rem] font-[500] text-[1rem]`}>
+                            <th className={`select-text text-center rounded-tr-[.8rem] bg-white p-[1rem] font-[500] md:text-[1rem]`}>
                                 Action
                             </th>
                         </tr>
@@ -179,22 +181,22 @@ export default function LayananDetail() {
                     <tbody>
                         {data?.map((item: any, i: number) => (
                             <tr key={i} className={`border-b ${i === data.length - 1 && "border-none"} border-main-gray-border`}>
-                                <td className={`select-text text-center ${i === (data.length - 1) && "rounded-bl-[.8rem]"} bg-white p-[1rem] text-[.9rem] font-[400] text-main-gray-text`}>
+                                <td className={`select-text text-center ${i === (data.length - 1) && "rounded-bl-[.8rem]"} bg-white p-[1rem] md:text-[.9rem] font-[400] text-main-gray-text`}>
                                     {(page * 10) + (i + 1) - 10}
                                 </td>
-                                <td className={`select-text text-center bg-white p-[1rem] text-[.9rem] font-[400] text-main-gray-text`}>
+                                {/* <td className={`select-text text-center bg-white p-[1rem] md:text-[.9rem] font-[400] text-main-gray-text`}>
                                     {item.id}
-                                </td>
-                                <td className={`select-text text-center bg-white p-[1rem] text-[.9rem] font-[400] text-main-gray-text`}>
+                                </td> */}
+                                <td className={`select-text text-center bg-white p-[1rem] md:text-[.9rem] font-[400] text-main-gray-text`}>
                                     {item.layanan_detail}
                                 </td>
-                                <td className={`select-text text-center bg-white p-[1rem] text-[.9rem] font-[400] text-main-gray-text`}>
+                                <td className={`select-text text-center bg-white p-[1rem] md:text-[.9rem] font-[400] text-main-gray-text`}>
                                     {item.harga}
                                 </td>
-                                <td className={`select-text text-center bg-white p-[1rem] text-[.9rem] font-[400] text-main-gray-text`}>
+                                <td className={`select-text text-center bg-white p-[1rem] md:text-[.9rem] font-[400] text-main-gray-text`}>
                                     {item.layanan}
                                 </td>
-                                <td className={`text-center ${i === (data.length - 1) && "rounded-br-[.8rem]"} bg-white p-[1rem] text-[.9rem] font-[400] text-main-gray-text`}>
+                                <td className={`text-center ${i === (data.length - 1) && "rounded-br-[.8rem]"} bg-white p-[1rem] md:text-[.9rem] font-[400] text-main-gray-text`}>
                                     <div className="flex gap-2 w-full justify-center">
                                         <button className="bg-blue-100 text-blue-600 py-[.8rem] px-[1.5rem] font-[600] rounded-[1rem] hover:bg-blue-200 active:bg-blue-100"
                                             onClick={() => { setEdit({ value: true, data: { ...item } }) }}
@@ -202,7 +204,7 @@ export default function LayananDetail() {
                                             Edit
                                         </button>
                                         <button className="bg-main-pink text-main-red py-[.8rem] px-[1rem] font-[600] rounded-[1rem] hover:bg-main-pink-hover active:bg-main-pink"
-                                            onClick={() => { setModalDelete((prev: any) => ({ ...prev, title: item.name, show: true, id: item.id })) }}
+                                            onClick={() => { setModalDelete((prev: any) => ({ ...prev, title: item.layanan_detail, show: true, id: item.id })) }}
                                         >
                                             Delete
                                         </button>

@@ -1,7 +1,7 @@
 import axios from "axios"
 import { useEffect, useState } from "react"
 import { Api_Url } from "../../env"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import InputText from "../../_Component/Input/InputText"
 import LoadingPageWithText from "../../_Component/Loading/LoadingPageText"
 import InputNumber from "../../_Component/Input/InputNumber"
@@ -11,11 +11,11 @@ import { getError } from "../../Utils"
 
 export default function AddLayananDetail() {
 
-    const navigate = useNavigate()
-
     const [name, setName] = useState<string>("")
     const [price, setPrice] = useState<string>("")
     const [IdLayanan, setIdLayanan] = useState<string>("")
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [Layanan, setLayanan] = useState<string>("")
 
     const [option, setOption] = useState<any>([])
@@ -59,7 +59,7 @@ export default function AddLayananDetail() {
     }, [])
 
     return (
-        <div className="px-[4rem] py-[2rem]">
+        <div className="px-[1rem] md:px-[4rem] py-[2rem]">
             <LoadingPageWithText heading="Adding Layanan Detail...." loading={loading} />
             <Link to={"/Detail-Layanan"} className="flex gap-[1rem] justify-start items-center mb-[2rem] hover:bg-main-gray-border cursor-pointer select-none w-fit px-[.8rem] rounded-[1rem] duration-300">
                 <i className='bx bx-arrow-back text-[1.5rem]' />
@@ -97,7 +97,7 @@ export default function AddLayananDetail() {
                                     Pilih Layanan
                                 </option>
                                 {option?.map((item: any, i: number) => (
-                                    <option value={item.id_layanan} className="text-black"
+                                    <option key={i} value={item.id_layanan} className="text-black"
                                         onClick={() =>
                                             setLayanan(item.layanan)}
                                     >

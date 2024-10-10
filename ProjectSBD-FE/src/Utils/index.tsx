@@ -60,6 +60,6 @@ export const getUserData = async () => {
     } catch (error) {
         console.log("Token Invalid", error)
         // getError(error, "Your Session is Expired");
-        return;
+        return null;
     }
 }

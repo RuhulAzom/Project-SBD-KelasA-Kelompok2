@@ -1,14 +1,9 @@
-import { useEffect, useState } from 'react'
-import reactLogo from './_Assests/react.svg'
+import { createContext, useEffect, useState } from 'react'
 import './App.css'
 import Layout from './_Layout'
 import { Route, Routes, useLocation, useNavigate } from 'react-router-dom'
 import Transactions from './Pages/Transactions'
-import ModalDelete from './_Component/ModalDelete'
-import LoadingPageWithText from './_Component/Loading/LoadingPageText'
 import Dashboard from './Pages/Dashboard'
-import AddLayanan from './Pages/Layanan/AddLayanan'
-import Layanan from './Pages/Layanan'
 import LayananDetail from './Pages/LayananDetail'
 import AddLayananDetail from './Pages/LayananDetail/AddLayananDetail'
 import Staff from './Pages/Staff'
@@ -18,17 +13,25 @@ import AddCustomer from './Pages/Customer/AddCustomer'
 import AddTransactions from './Pages/Transactions/AddTransactions'
 import DetailTransactions from './Pages/Transactions/DetailTransactions'
 import Auth from './Pages/Auth'
-import { LogOut, getError, getUserData, token } from './Utils'
-import Cookies from "js-cookie"
+import { LogOut, token } from './Utils'
 import axios from 'axios'
 import { Api_Url } from './env'
 import PageNotFound from './Pages/PageNotFound'
+
+export const AppContexs = createContext<any>(null)
+
+type UserData = {
+  id: string
+  role: "Admin" | "Staff"
+  username: string
+} | null
 
 function App() {
   const { pathname } = useLocation()
   const navigate = useNavigate()
 
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
+  const [userData, setUserData] = useState<UserData>(null)
 
   const checkToken = async () => {
     try {
@@ -36,6 +39,11 @@ function App() {
       console.log(res)
       if (res.status === 200) {
         setLoggedIn(true)
+        setUserData({
+          id: res.data.data.id,
+          role: res.data.data.role,
+          username: res.data.data.username
+        })
         if (pathname.includes("Login")) {
           navigate("/")
         }
@@ -62,55 +70,58 @@ function App() {
   console.log(userData)
 
   return (
-    <div className="">
-      {loggedIn && userData && userData.role === "Staff" ?
-        <Layout>
-          <Routes>
-            <Route path='*' element={<PageNotFound />} />
-            <Route path='/' element={<Dashboard />} />
-            <Route path='/Login' element={<Auth />} />
-            <Route path='/Settings' element={<Dashboard />} />
-            <Route path='/Transactions' element={<Transactions />} />
-            <Route path='/Transactions/Detail/:nota' element={<DetailTransactions />} />
-            <Route path='/Transactions/Add' element={<AddTransactions />} />
-            {/* <Route path='/Staff' element={<Staff />} />
-            <Route path='/Staff/Add' element={<AddStaff />} /> */}
-            <Route path='/Customer' element={<Customer />} />
-            <Route path='/Customer/Add' element={<AddCustomer />} />
-            <Route path='/Detail-Layanan' element={<LayananDetail />} />
-            <Route path='/Detail-Layanan/Add' element={<AddLayananDetail />} />
-            <Route path='/Layanan' element={<Layanan />} />
-            <Route path='/Layanan/Add' element={<AddLayanan />} />
-          </Routes>
-        </Layout>
-        : loggedIn && userData && userData.role === "Admin" ?
+    <AppContexs.Provider value={{ userData, setUserData }}>
+      <div className="">
+        {loggedIn && userData && userData.role === "Staff" ?
           <Layout>
             <Routes>
+              <Route path='*' element={<PageNotFound />} />
               <Route path='/' element={<Dashboard />} />
               <Route path='/Login' element={<Auth />} />
               <Route path='/Settings' element={<Dashboard />} />
               <Route path='/Transactions' element={<Transactions />} />
               <Route path='/Transactions/Detail/:nota' element={<DetailTransactions />} />
               <Route path='/Transactions/Add' element={<AddTransactions />} />
-              <Route path='/Staff' element={<Staff />} />
-              <Route path='/Staff/Add' element={<AddStaff />} />
+              {/* <Route path='/Staff' element={<Staff />} />
+            <Route path='/Staff/Add' element={<AddStaff />} /> */}
               <Route path='/Customer' element={<Customer />} />
               <Route path='/Customer/Add' element={<AddCustomer />} />
               <Route path='/Detail-Layanan' element={<LayananDetail />} />
               <Route path='/Detail-Layanan/Add' element={<AddLayananDetail />} />
-              <Route path='/Layanan' element={<Layanan />} />
-              <Route path='/Layanan/Add' element={<AddLayanan />} />
+              {/* <Route path='/Layanan' element={<Layanan />} />
+              <Route path='/Layanan/Add' element={<AddLayanan />} /> */}
             </Routes>
           </Layout>
-          :
-          <Routes>
-            <Route path='/Login' element={<Auth />} />
-          </Routes>
-      }
-    </div>
+          : loggedIn && userData && userData.role === "Admin" ?
+            <Layout>
+              <Routes>
+                <Route path='/' element={<Dashboard />} />
+                <Route path='/Login' element={<Auth />} />
+                <Route path='/Settings' element={<Dashboard />} />
+                <Route path='/Transactions' element={<Transactions />} />
+                <Route path='/Transactions/Detail/:nota' element={<DetailTransactions />} />
+                <Route path='/Transactions/Add' element={<AddTransactions />} />
+                <Route path='/Staff' element={<Staff />} />
+                <Route path='/Staff/Add' element={<AddStaff />} />
+                <Route path='/Customer' element={<Customer />} />
+                <Route path='/Customer/Add' element={<AddCustomer />} />
+                <Route path='/Detail-Layanan' element={<LayananDetail />} />
+                <Route path='/Detail-Layanan/Add' element={<AddLayananDetail />} />
+                {/* <Route path='/Layanan' element={<Layanan />} />
+                <Route path='/Layanan/Add' element={<AddLayanan />} /> */}
+              </Routes>
+            </Layout>
+            :
+            <Routes>
+              <Route path='/Login' element={<Auth />} />
+            </Routes>
+        }
+      </div>
+    </AppContexs.Provider>
+
   )
 }
 
 export default App
 
-export const userData = await getUserData()
+// export const userData = await getUserData()

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Api_Url } from "../../env";
 import axios from "axios";
-import { getDate, getDateString, getError, getHours } from "../../Utils";
+import { getDateString, getError, getHours } from "../../Utils";
 import ModalDelete from "../../_Component/ModalDelete";
 import LoadingPageWithText from "../../_Component/Loading/LoadingPageText";
 import toast from "react-hot-toast";
@@ -12,7 +12,6 @@ export default function Transactions() {
 
 
     const [data, setData] = useState<any>([])
-    const [tempData, setTempData] = useState<any>([])
     const [loading, setLoading] = useState<boolean>(false)
 
 
@@ -235,7 +234,7 @@ export default function Transactions() {
                     Status: item.tanggal_keluar ? "Selesai" : "Proses"
                 }
             })
-            let wb = utils.book_new(),
+            const wb = utils.book_new(),
                 ws = utils.json_to_sheet(download);
             utils.book_append_sheet(wb, ws, "items");
             writeFile(wb, fileName);
@@ -252,7 +251,7 @@ export default function Transactions() {
                     Status: item.tanggal_keluar ? "Selesai" : "Proses"
                 }
             })
-            let wb = utils.book_new(),
+            const wb = utils.book_new(),
                 ws = utils.json_to_sheet(download);
             utils.book_append_sheet(wb, ws, "items");
             writeFile(wb, fileName);
@@ -260,7 +259,7 @@ export default function Transactions() {
     };
 
     return (
-        <div className="py-[2rem] px-[4rem] flex flex-col gap-[2rem]">
+        <div className="pb-[2rem] pt-[1rem] md:py-[2rem] px-[1rem] md:px-[4rem] flex flex-col gap-[2rem]">
 
 
             <ModalDelete data={modalDelete} setDelete={setModalDelete} />
@@ -276,82 +275,91 @@ export default function Transactions() {
                 </Link>
             </div> */}
             <div className="flex w-full items-center justify-between gap-[1rem]">
-                <div className="flex items-center gap-[2rem]">
-                    <form className="w-full xl:w-fit relative flex items-center text-main-gray-text" onSubmit={(e) => {
-                        e.preventDefault();
-                        setPage(1)
-                        if (typeSearch === "nota") {
-                            searchByNota(1)
-                        } else if (typeSearch === "customer") {
-                            searchByCustomer(1)
-                        } else if (typeSearch === "staff") {
-                            searchByStaff(1)
-                        }
-                    }}>
-                        <button className="absolute left-[1rem] text-[1.5rem] hover:scale-125 cursor-pointer active:scale-110 duration-300 flex justify-center items-center">
-                            <i className='bx bx-search' />
-                        </button>
-                        <input type="text" placeholder="Search Items" className="w-full xl:w-[400px] shadow-table-black outline-none bg-white py-[.8rem] px-[3rem] rounded-[.8rem] border border-white focus:border-main-gray-border hover:border-main-gray-border duration-300" onChange={(e) => {
-                            setSearchValue(e.target.value);
-                        }} value={searchValue} />
-                        {searchValue.length > 0 &&
-                            <i className='bx bx-x absolute right-4 text-[1.5rem] duration-300 hover:bg-main-gray-border rounded-[50%]' onClick={() => { setSearchValue(""); setPage(1) }} />
-                        }
-                    </form>
-                    <select className="flex shrink-0 ml-[-1rem] items-center gap-[.5rem] bg-white py-[.8rem] px-[1rem] rounded-[.8rem] shadow-table-black text-main-gray-text cursor-pointer border border-white hover:border-main-gray-border active:border-white duration-300 outline-none select-none" onChange={(e) => {
-                        setTypeSearch(e.target.value)
-                    }} value={typeSearch} >
-                        <option value="nota" className="text-gray-400">
-                            By Nota
-                        </option>
-                        <option value="customer" className="text-gray-400">
-                            By Customer
-                        </option>
-                        <option value="staff" className="text-gray-400">
-                            By Staff
-                        </option>
-                    </select>
-                    {searchValue.length === 0 &&
-                        <div className="relative flex items-center justify-center">
-                            <select className={`flex items-center gap-[.5rem] bg-white py-[.8rem] pl-[3rem] pr-[1rem] rounded-[.8rem] shadow-table-black ${filter === "" ? "text-gray-400" : "text-main-gray-text"} cursor-pointer border border-white hover:border-main-gray-border active:border-white duration-300 outline-none`} onChange={(e) => {
-                                setFilter(e.target.value)
-                            }} value={filter} >
-                                <option value="" className="text-gray-400">
-                                    Pilih Filter
-                                </option>
-                                <option value="status" className="text-main-gray-text">
-                                    Status
-                                </option>
-                                <option value="tanggal_masuk" className="text-main-gray-text">
-                                    Tanggal Masuk
-                                </option>
-                                <option value="tanggal_keluar" className="text-main-gray-text">
-                                    Tanggal Keluar
-                                </option>
-                            </select>
-                            <i className='bx bx-filter text-[1.5rem] absolute left-[1rem]' />
-                        </div>
-                    }
-                    {searchValue.length === 0 && filter === "status" &&
+                <div className="flex flex-col md:flex-row items-center gap-[1rem] md:gap-[2rem]">
+                    <Link to={"/Transactions/Add"} className="md:hidden shrink-0 bg-main text-white font-[500] w-full flex justify-center py-[.8rem] rounded-[1rem] hover:bg-main-hover active:bg-main-purple duration-200 shadow-table-black">
+                        Add Transactions
+                    </Link>
+                    <div className="flex w-full md:w-fit gap-[2rem]">
+                        <form className="w-full xl:w-fit relative flex items-center text-main-gray-text" onSubmit={(e) => {
+                            e.preventDefault();
+                            setPage(1)
+                            if (typeSearch === "nota") {
+                                searchByNota(1)
+                            } else if (typeSearch === "customer") {
+                                searchByCustomer(1)
+                            } else if (typeSearch === "staff") {
+                                searchByStaff(1)
+                            }
+                        }}>
+                            <button className="absolute left-[1rem] text-[1.5rem] hover:scale-125 cursor-pointer active:scale-110 duration-300 flex justify-center items-center">
+                                <i className='bx bx-search' />
+                            </button>
+                            <input type="text" placeholder="Search Items" className="w-full xl:w-[400px] shadow-table-black outline-none bg-white py-[.8rem] px-[3rem] rounded-[.8rem] border border-white focus:border-main-gray-border hover:border-main-gray-border duration-300" onChange={(e) => {
+                                setSearchValue(e.target.value);
+                            }} value={searchValue} />
+                            {searchValue.length > 0 &&
+                                <i className='bx bx-x absolute right-4 text-[1.5rem] duration-300 hover:bg-main-gray-border rounded-[50%]' onClick={() => { setSearchValue(""); setPage(1) }} />
+                            }
+                        </form>
                         <select className="flex shrink-0 ml-[-1rem] items-center gap-[.5rem] bg-white py-[.8rem] px-[1rem] rounded-[.8rem] shadow-table-black text-main-gray-text cursor-pointer border border-white hover:border-main-gray-border active:border-white duration-300 outline-none select-none" onChange={(e) => {
-                            setStatus(e.target.value)
-                        }} value={status} >
-                            <option value="selesai" className="text-gray-400">
-                                Selesai
+                            setTypeSearch(e.target.value)
+                        }} value={typeSearch} >
+                            <option value="nota" className="text-gray-400">
+                                By Nota
                             </option>
-                            <option value="proses" className="text-gray-400">
-                                Proses
+                            <option value="customer" className="text-gray-400">
+                                By Customer
+                            </option>
+                            <option value="staff" className="text-gray-400">
+                                By Staff
                             </option>
                         </select>
-                    }
-                    {searchValue.length === 0 && filter === "tanggal_masuk" || filter === "tanggal_keluar" ?
-                        <input type="date" className="px-[1rem] py-[.7rem] rounded-[.5rem] outline-none border border-main-gray-border w-full" onChange={(e) => {
-                            setTanggal(e.target.value)
-                        }} /> : null
-                    }
+                    </div>
+                    <div className={`grid ${filter !== "" ? "grid-cols-2" : "grid-cols-1"} md:flex gap-[1rem] md:gap-[2rem] w-full md:w-fit duration-300`}>
+                        {searchValue.length === 0 &&
+                            <div className="relative flex items-center justify-center shrink-0">
+                                <select className={`flex items-center gap-[.5rem] bg-white w-full md:w-[unset] py-[.8rem] pl-[3rem] pr-[1rem] rounded-[.8rem] shadow-table-black ${filter === "" ? "text-gray-400" : "text-main-gray-text"} cursor-pointer border border-white hover:border-main-gray-border active:border-white duration-300 outline-none`} onChange={(e) => {
+                                    setFilter(e.target.value)
+                                }} value={filter} >
+                                    <option value="" className="text-gray-400">
+                                        Pilih Filter
+                                    </option>
+                                    <option value="status" className="text-main-gray-text">
+                                        Status
+                                    </option>
+                                    <option value="tanggal_masuk" className="text-main-gray-text">
+                                        Tanggal Masuk
+                                    </option>
+                                    <option value="tanggal_keluar" className="text-main-gray-text">
+                                        Tanggal Keluar
+                                    </option>
+                                </select>
+                                <i className='bx bx-filter text-[1.5rem] absolute left-[1rem]' />
+                            </div>
+                        }
+                        {searchValue.length === 0 && filter === "status" &&
+                            <div className="relative flex items-center justify-center md:w-full pl-[1rem] md:pl-0 min-w-[110px]">
+                                <select className="flex w-full shrink-0 ml-[-1rem] items-center gap-[.5rem] bg-white py-[.8rem] px-[1rem] rounded-[.8rem] shadow-table-black text-main-gray-text cursor-pointer border border-white hover:border-main-gray-border active:border-white duration-300 outline-none select-none" onChange={(e) => {
+                                    setStatus(e.target.value)
+                                }} value={status} >
+                                    <option value="selesai" className="text-gray-400">
+                                        Selesai
+                                    </option>
+                                    <option value="proses" className="text-gray-400">
+                                        Proses
+                                    </option>
+                                </select>
+                            </div>
+                        }
+                        {searchValue.length === 0 && filter === "tanggal_masuk" || filter === "tanggal_keluar" ?
+                            <input type="date" className="px-[1rem] py-[.7rem] rounded-[.5rem] outline-none border border-main-gray-border w-full" onChange={(e) => {
+                                setTanggal(e.target.value)
+                            }} /> : null
+                        }
+                    </div>
                 </div>
 
-                <Link to={"/Transactions/Add"} className="shrink-0 bg-main text-white font-[500] px-[1.5rem] py-[.8rem] rounded-[1rem] hover:bg-main-hover active:bg-main-purple duration-200 shadow-table-black">
+                <Link to={"/Transactions/Add"} className="hidden md:block shrink-0 bg-main text-white font-[500] px-[1.5rem] py-[.8rem] rounded-[1rem] hover:bg-main-hover active:bg-main-purple duration-200 shadow-table-black">
                     Add Transactions
                 </Link>
             </div>

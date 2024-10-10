@@ -1,17 +1,14 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Api_Url } from "../../env"
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import InputText from "../../_Component/Input/InputText"
 import LoadingPageWithText from "../../_Component/Loading/LoadingPageText"
-import InputNumber from "../../_Component/Input/InputNumber"
 import toast from "react-hot-toast"
 import { getError } from "../../Utils"
 
 
 export default function AddCustomer() {
-
-    const navigate = useNavigate()
 
     const [name, setName] = useState<string>("")
     const [telp, setTelp] = useState<string>("")
@@ -39,7 +36,7 @@ export default function AddCustomer() {
     }
 
     return (
-        <div className="px-[4rem] py-[2rem]">
+        <div className="px-[1rem] md:px-[4rem] py-[2rem]">
             <LoadingPageWithText heading="Adding Customer...." loading={loading} />
             <Link to={"/Customer"} className="flex gap-[1rem] justify-start items-center mb-[2rem] hover:bg-main-gray-border cursor-pointer select-none w-fit px-[.8rem] rounded-[1rem] duration-300">
                 <i className='bx bx-arrow-back text-[1.5rem]' />

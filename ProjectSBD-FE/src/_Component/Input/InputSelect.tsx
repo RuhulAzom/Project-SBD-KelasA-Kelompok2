@@ -1,4 +1,4 @@
-export default function InputSelect({ heading, option, setValue, value }: any) {
+export default function InputSelect({ heading, option, setValue }: any) {
     return (
 
         <div className="input-poster flex flex-col gap-[.5rem]">
@@ -10,7 +10,7 @@ export default function InputSelect({ heading, option, setValue, value }: any) {
                     Pilih Layanan
                 </option>
                 {option?.map((item: any, i: number) => (
-                    <option value={item.id_layanan} className="text-black"
+                    <option key={i} value={item.id_layanan} className="text-black"
                         onClick={() =>
                             setValue({ ...item })}
                     >
