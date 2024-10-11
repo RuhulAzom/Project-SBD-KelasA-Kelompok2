@@ -75,8 +75,6 @@ function App() {
   console.log(userData)
 
   if (loading) return <div>Loading</div>
-  else if (!loading && !userData) return <div>Error</div>
-
   return (
     <AppContexs.Provider value={{ userData, setUserData }}>
       <div className="">
