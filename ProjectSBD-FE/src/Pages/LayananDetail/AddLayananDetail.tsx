@@ -16,7 +16,7 @@ export default function AddLayananDetail() {
     const [IdLayanan, setIdLayanan] = useState<string>("")
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [Layanan, setLayanan] = useState<string>("")
+    // const [Layanan, setLayanan] = useState<string>("")
 
     const [option, setOption] = useState<any>([])
 
@@ -98,8 +98,6 @@ export default function AddLayananDetail() {
                                 </option>
                                 {option?.map((item: any, i: number) => (
                                     <option key={i} value={item.id_layanan} className="text-black"
-                                        onClick={() =>
-                                            setLayanan(item.layanan)}
                                     >
                                         {item.layanan}
                                     </option>

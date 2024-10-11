@@ -348,7 +348,7 @@ export default function AddTransactions() {
                                     }} />
                                     <i className='bx bx-x absolute top-1 right-1 text-main-red text-[1.5rem] bg-white rounded-[50%] hover:bg-[#ffffffdc] hover:scale-105 cursor-pointer duration-200'
                                         onClick={() => {
-                                            const data = listBuy.filter((item: any, index: number) => i !== index);
+                                            const data = listBuy.filter((_: any, index: number) => i !== index);
                                             setListBuy([...data])
                                         }}
                                     />
