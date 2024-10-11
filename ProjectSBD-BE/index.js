@@ -102,10 +102,10 @@ app.post("/account", async (req, res) => {
 app.post("/login", async (req, res) => {
     try {
         const { username, password } = req.body;
-        const account = await prisma.$queryRaw`
-            SELECT * FROM \`Account\` WHERE BINARY username = ${username} LIMIT 1
-        `;
-        const data = account[0]
+        const account = await prisma.account.findFirst({
+            where: { username }
+        })
+        const data = account
         if (!data) {
             return res.status(404).json({
                 status: 404,

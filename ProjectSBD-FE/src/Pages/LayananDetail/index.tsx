@@ -115,7 +115,7 @@ export default function LayananDetail() {
                 <p className="text-[1.5rem] font-[500] text-main-heading-text">
                     Detail Layanan
                 </p>
-                <Link to={"/Detail-Layanan/Add"} className="md:block shrink-0 bg-main-purple text-main font-[500] px-[1.5rem] py-[.8rem] rounded-[1rem] hover:bg-main-purple-hover active:bg-main-purple duration-200 shadow-table-black">
+                <Link to={"/Detail-Layanan/Add"} className="md:hidden shrink-0 bg-main-purple text-main font-[500] px-[1.5rem] py-[.8rem] rounded-[1rem] hover:bg-main-purple-hover active:bg-main-purple duration-200 shadow-table-black">
                     Add Items
                 </Link>
             </div>
