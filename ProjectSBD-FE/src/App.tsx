@@ -32,8 +32,10 @@ function App() {
 
   const [loggedIn, setLoggedIn] = useState<boolean>(false)
   const [userData, setUserData] = useState<UserData>(null)
+  const [loading, setLoading] = useState<boolean>(true)
 
   const checkToken = async () => {
+    setLoading(true)
     try {
       const res = await axios.get(`${Api_Url}/check-token/${token}`)
       console.log(res)
@@ -47,9 +49,11 @@ function App() {
         if (pathname.includes("Login")) {
           navigate("/")
         }
+        setLoading(false)
         return;
       } else {
         LogOut()
+        setLoading(false)
         throw new Error;
       }
     } catch (error) {
@@ -57,6 +61,7 @@ function App() {
       if (!pathname.includes("Login")) {
         navigate("/Login")
       }
+      setLoading(false)
       // getError(error, "Your Session is Expired");
       return;
     }
@@ -68,6 +73,9 @@ function App() {
     }
   }, [])
   console.log(userData)
+
+  if (loading) return <div>Loading</div>
+  else if (!loading && !userData) return <div>Error</div>
 
   return (
     <AppContexs.Provider value={{ userData, setUserData }}>

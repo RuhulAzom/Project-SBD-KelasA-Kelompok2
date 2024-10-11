@@ -13,7 +13,7 @@ export default function Header({ setShowSidebar }: { setShowSidebar: React.Dispa
             <p className="hidden md:block font-[500] text-main-heading-text text-[1.5rem] sansita tracking-wide">
                 Oke Laundry
             </p>
-            <div onClick={() => { setShowSidebar((prev) => !prev) }}>
+            <div className="md:hidden" onClick={() => { setShowSidebar((prev) => !prev) }}>
                 <Menu />
             </div>
             <div className="flex gap-[1rem] md:pr-[3rem] items-center">
