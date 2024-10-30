@@ -45,7 +45,16 @@ export default function Auth() {
         <div className="fixed top-0 left-0 w-full h-full">
             <img src={LoginFrame} alt="" className="h-full w-full max-w-[unset]" />
             <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center bg-[#ffffff17] backdrop-blur-[10px]">
-                <div className="bg-[#ffffffa6] w-fit p-[3rem] shadow-default rounded-[2rem]">
+                <div className="bg-[#ffffffa6] w-fit p-[3rem] shadow-default rounded-[2rem] relative">
+                    <div className="absolute z-[100] left-0 bottom-[calc(100%+1rem)] w-full justify-center items-center text-black">
+                        <div className="grid grid-cols-2 w-fit bg-[#ffffffa6] rounded-[1rem] p-[1rem] gap-[.3rem]">
+                            <p className="col-span-2 font-[500] text-[1.2rem]">Test Account</p>
+                            <p>Username</p>
+                            <p>: admin</p>
+                            <p>Password</p>
+                            <p>: 123</p>
+                        </div>
+                    </div>
                     <div id="heading" className="whitespace-nowrap mb-[2rem]">
                         {/* <p className="text-main-green-dark font-[600] text-[1rem] sm:text-[1.5rem]">
                     WELCOME TO
